@@ -1,4 +1,4 @@
-# TP XSS CSRF
+﻿# TP XSS CSRF
 Organisateurs : Restoy Esteban, Janvier Victor, Coutard Antoine et Demourgues Lise.
 Le cours est disponible ici : https://xsslearner.herokuapp.com/
 
@@ -47,18 +47,34 @@ Pour se créer un compte : entrez un user, votre prenom de preference pour la co
 Commencez par le niveau 1 : 
 1. Essayez d'injecter du code sans passer par un formulaire.  2 points
 
+https://xss-csrf-tp.herokuapp.com/level/1?page=1%3Cimg%20src=%22nul%22onerror=console.log(test)/%3E
+
 ### Level 2 : 7 points
 
 (Ecrire dans le compte rendu les différents scripts injectés)
 1. Injectez dans le formulaire de creation d'article (a droite) un script permettant d'afficher une alerte. 1 point
+<script>alert(‘Test’)</script>
+
 2. Pourquoi la balise script ne fonctionne pas ? 2 points 
+Les scripts sont bloquéss
+
 3. Comment les donnees en base sont récupérées sur la page ? 1 point
-4. Essayez de faire une injection XSS qui bloque totalement le bon fonctionnement du site il y a plusieurs réponses possibles. 2 points
+Par la méthode POST
+
+4. Essayez de faire une injection XSS qui bloque totalement le bon 
+fonctionnement du site il y a plusieurs réponses possibles. 2 points
+<img src='nimportequoi' onerror="body.remove()" ></img>
+
 5. Essayez de récupérer la session de l'utilisateur via une injection xss et de les envoyer sur heroku. Essayez de le faire de facon invisible  1 points
+<img src='nimportequoi' onerror="console.log(<%= session["role"].ToString() %>
+)" ></img>
+
 
 ### Level 3 : 4 points
 
 1. Rusez pour bypass le sanitizer 2 points
+<img src='nimportequoi' onerror="body.remove()" ></img>
+
 2. Faire un keylogger simple en js qui appelle le lien sur heroku  2 points
 
 ## Partie 2 - CSRF - 7 points
@@ -69,6 +85,10 @@ Demandez a votre binôme de créer un article sur l'application (cf. level 2)
 
 1. Avoir un site heroku fonctionnel. 2 points
 2. Montez une attaque CSRF grâce à un formulaire. hint : https://xss-csrf-tp.herokuapp.com/articles/delete 2 points
+
+<form action=https://xss-csrf-tp.herokuapp.com/articles/delete method="GET        id="1"></form>
+
+
 Envoyez le lien de ce site malveillant à votre binôme et vérifiez que l'article qu'il a crée est supprimé.
 4. Avoir une redirection visible c'est pas très "propre" comme attaque.
 Faites donc en sorte de masquer cette attaque pour qu'elle soit invisible à l'utilisateur. 3 points
